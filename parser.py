@@ -134,8 +134,7 @@ def p_vars_block(p):
 
 # Definición del mensaje que se emitira en el error de sintaxis
 def p_error(p):
-    # raise Exception("Syntax error in input! - {} ".format(p))
-    print("Syntax error in input! - {} ".format(p))
+    print("ERROR in iput syntax - {} ".format(p))
 
 # Definición del epsilon/nulo/vacío
 def p_empty(p):
@@ -144,7 +143,7 @@ def p_empty(p):
 
 yacc.yacc()
 
-# Main progra del parser
+# Main program del parser
 if __name__ == '__main__':
 
     if len(sys.argv) > 1:
@@ -154,7 +153,7 @@ if __name__ == '__main__':
             data = f.read()
             f.close()
             if yacc.parse(data) == "COMPILED":
-                print("INPUT READY TO COMPILE")
+                print("INPUT COMPILED")
         except EOFError:
             print(EOFError)
     else:
