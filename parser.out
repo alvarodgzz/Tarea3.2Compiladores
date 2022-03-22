@@ -1,0 +1,1405 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM ID SEMICOLON program_vars block
+Rule 2     program_vars -> vars
+Rule 3     program_vars -> empty
+Rule 4     block -> LEFTBRACKET statement_block RIGHTBRACKET
+Rule 5     statement_block -> statement statement_block
+Rule 6     statement_block -> empty
+Rule 7     statement -> assignment
+Rule 8     statement -> condition
+Rule 9     statement -> writing
+Rule 10    assignment -> ID EQUALS expression SEMICOLON
+Rule 11    condition -> IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON
+Rule 12    writing -> PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON
+Rule 13    else_condition -> ELSE block
+Rule 14    else_condition -> empty
+Rule 15    print_val -> expression print_exp
+Rule 16    print_val -> CTESTRING print_exp
+Rule 17    print_exp -> COMMA print_val
+Rule 18    print_exp -> empty
+Rule 19    expression -> exp comparation
+Rule 20    comparation -> GREATER comparation_exp
+Rule 21    comparation -> LESS comparation_exp
+Rule 22    comparation -> NOTEQUAL comparation_exp
+Rule 23    comparation -> empty
+Rule 24    comparation_exp -> exp
+Rule 25    exp -> term operator
+Rule 26    operator -> PLUS term operator
+Rule 27    operator -> MINUS term operator
+Rule 28    operator -> empty
+Rule 29    term -> factor term_operator
+Rule 30    term_operator -> TIMES factor term_operator
+Rule 31    term_operator -> DIVIDE factor term_operator
+Rule 32    term_operator -> empty
+Rule 33    factor -> LEFTPAREN expression RIGHTPAREN
+Rule 34    factor -> sign var_cte
+Rule 35    sign -> PLUS
+Rule 36    sign -> MINUS
+Rule 37    sign -> empty
+Rule 38    var_cte -> ID
+Rule 39    var_cte -> CTEI
+Rule 40    var_cte -> CTEF
+Rule 41    vars -> VAR var_id COLON type SEMICOLON vars_block
+Rule 42    var_id -> ID var_id_2
+Rule 43    var_id_2 -> COMMA ID var_id_2
+Rule 44    var_id_2 -> empty
+Rule 45    type -> INT
+Rule 46    type -> FLOAT
+Rule 47    vars_block -> var_id COLON type SEMICOLON vars_block
+Rule 48    vars_block -> empty
+Rule 49    empty -> <empty>
+
+Terminals, with rules where they appear
+
+COLON                : 41 47
+COMMA                : 17 43
+CTEF                 : 40
+CTEI                 : 39
+CTESTRING            : 16
+DIVIDE               : 31
+ELSE                 : 13
+EQUALS               : 10
+FLOAT                : 46
+GREATER              : 20
+ID                   : 1 10 38 42 43
+IF                   : 11
+INT                  : 45
+LEFTBRACKET          : 4
+LEFTPAREN            : 11 12 33
+LESS                 : 21
+MINUS                : 27 36
+NOTEQUAL             : 22
+PLUS                 : 26 35
+PRINT                : 12
+PROGRAM              : 1
+RIGHTBRACKET         : 4
+RIGHTPAREN           : 11 12 33
+SEMICOLON            : 1 10 11 12 41 47
+TIMES                : 30
+VAR                  : 41
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 7
+block                : 1 11 13
+comparation          : 19
+comparation_exp      : 20 21 22
+condition            : 8
+else_condition       : 11
+empty                : 3 6 14 18 23 28 32 37 44 48
+exp                  : 19 24
+expression           : 10 11 15 33
+factor               : 29 30 31
+operator             : 25 26 27
+print_exp            : 15 16
+print_val            : 12 17
+program              : 0
+program_vars         : 1
+sign                 : 34
+statement            : 5
+statement_block      : 4 5
+term                 : 25 26 27
+term_operator        : 29 30 31
+type                 : 41 47
+var_cte              : 34
+var_id               : 41 47
+var_id_2             : 42 43
+vars                 : 2
+vars_block           : 41 47
+writing              : 9
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM ID SEMICOLON program_vars block
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . ID SEMICOLON program_vars block
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM ID . SEMICOLON program_vars block
+
+    SEMICOLON       shift and go to state 4
+
+
+state 4
+
+    (1) program -> PROGRAM ID SEMICOLON . program_vars block
+    (2) program_vars -> . vars
+    (3) program_vars -> . empty
+    (41) vars -> . VAR var_id COLON type SEMICOLON vars_block
+    (49) empty -> .
+
+    VAR             shift and go to state 8
+    LEFTBRACKET     reduce using rule 49 (empty -> .)
+
+    program_vars                   shift and go to state 5
+    vars                           shift and go to state 6
+    empty                          shift and go to state 7
+
+state 5
+
+    (1) program -> PROGRAM ID SEMICOLON program_vars . block
+    (4) block -> . LEFTBRACKET statement_block RIGHTBRACKET
+
+    LEFTBRACKET     shift and go to state 10
+
+    block                          shift and go to state 9
+
+state 6
+
+    (2) program_vars -> vars .
+
+    LEFTBRACKET     reduce using rule 2 (program_vars -> vars .)
+
+
+state 7
+
+    (3) program_vars -> empty .
+
+    LEFTBRACKET     reduce using rule 3 (program_vars -> empty .)
+
+
+state 8
+
+    (41) vars -> VAR . var_id COLON type SEMICOLON vars_block
+    (42) var_id -> . ID var_id_2
+
+    ID              shift and go to state 12
+
+    var_id                         shift and go to state 11
+
+state 9
+
+    (1) program -> PROGRAM ID SEMICOLON program_vars block .
+
+    $end            reduce using rule 1 (program -> PROGRAM ID SEMICOLON program_vars block .)
+
+
+state 10
+
+    (4) block -> LEFTBRACKET . statement_block RIGHTBRACKET
+    (5) statement_block -> . statement statement_block
+    (6) statement_block -> . empty
+    (7) statement -> . assignment
+    (8) statement -> . condition
+    (9) statement -> . writing
+    (49) empty -> .
+    (10) assignment -> . ID EQUALS expression SEMICOLON
+    (11) condition -> . IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON
+    (12) writing -> . PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON
+
+    RIGHTBRACKET    reduce using rule 49 (empty -> .)
+    ID              shift and go to state 19
+    IF              shift and go to state 20
+    PRINT           shift and go to state 21
+
+    statement_block                shift and go to state 13
+    statement                      shift and go to state 14
+    empty                          shift and go to state 15
+    assignment                     shift and go to state 16
+    condition                      shift and go to state 17
+    writing                        shift and go to state 18
+
+state 11
+
+    (41) vars -> VAR var_id . COLON type SEMICOLON vars_block
+
+    COLON           shift and go to state 22
+
+
+state 12
+
+    (42) var_id -> ID . var_id_2
+    (43) var_id_2 -> . COMMA ID var_id_2
+    (44) var_id_2 -> . empty
+    (49) empty -> .
+
+    COMMA           shift and go to state 24
+    COLON           reduce using rule 49 (empty -> .)
+
+    var_id_2                       shift and go to state 23
+    empty                          shift and go to state 25
+
+state 13
+
+    (4) block -> LEFTBRACKET statement_block . RIGHTBRACKET
+
+    RIGHTBRACKET    shift and go to state 26
+
+
+state 14
+
+    (5) statement_block -> statement . statement_block
+    (5) statement_block -> . statement statement_block
+    (6) statement_block -> . empty
+    (7) statement -> . assignment
+    (8) statement -> . condition
+    (9) statement -> . writing
+    (49) empty -> .
+    (10) assignment -> . ID EQUALS expression SEMICOLON
+    (11) condition -> . IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON
+    (12) writing -> . PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON
+
+    RIGHTBRACKET    reduce using rule 49 (empty -> .)
+    ID              shift and go to state 19
+    IF              shift and go to state 20
+    PRINT           shift and go to state 21
+
+    statement                      shift and go to state 14
+    statement_block                shift and go to state 27
+    empty                          shift and go to state 15
+    assignment                     shift and go to state 16
+    condition                      shift and go to state 17
+    writing                        shift and go to state 18
+
+state 15
+
+    (6) statement_block -> empty .
+
+    RIGHTBRACKET    reduce using rule 6 (statement_block -> empty .)
+
+
+state 16
+
+    (7) statement -> assignment .
+
+    ID              reduce using rule 7 (statement -> assignment .)
+    IF              reduce using rule 7 (statement -> assignment .)
+    PRINT           reduce using rule 7 (statement -> assignment .)
+    RIGHTBRACKET    reduce using rule 7 (statement -> assignment .)
+
+
+state 17
+
+    (8) statement -> condition .
+
+    ID              reduce using rule 8 (statement -> condition .)
+    IF              reduce using rule 8 (statement -> condition .)
+    PRINT           reduce using rule 8 (statement -> condition .)
+    RIGHTBRACKET    reduce using rule 8 (statement -> condition .)
+
+
+state 18
+
+    (9) statement -> writing .
+
+    ID              reduce using rule 9 (statement -> writing .)
+    IF              reduce using rule 9 (statement -> writing .)
+    PRINT           reduce using rule 9 (statement -> writing .)
+    RIGHTBRACKET    reduce using rule 9 (statement -> writing .)
+
+
+state 19
+
+    (10) assignment -> ID . EQUALS expression SEMICOLON
+
+    EQUALS          shift and go to state 28
+
+
+state 20
+
+    (11) condition -> IF . LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON
+
+    LEFTPAREN       shift and go to state 29
+
+
+state 21
+
+    (12) writing -> PRINT . LEFTPAREN print_val RIGHTPAREN SEMICOLON
+
+    LEFTPAREN       shift and go to state 30
+
+
+state 22
+
+    (41) vars -> VAR var_id COLON . type SEMICOLON vars_block
+    (45) type -> . INT
+    (46) type -> . FLOAT
+
+    INT             shift and go to state 32
+    FLOAT           shift and go to state 33
+
+    type                           shift and go to state 31
+
+state 23
+
+    (42) var_id -> ID var_id_2 .
+
+    COLON           reduce using rule 42 (var_id -> ID var_id_2 .)
+
+
+state 24
+
+    (43) var_id_2 -> COMMA . ID var_id_2
+
+    ID              shift and go to state 34
+
+
+state 25
+
+    (44) var_id_2 -> empty .
+
+    COLON           reduce using rule 44 (var_id_2 -> empty .)
+
+
+state 26
+
+    (4) block -> LEFTBRACKET statement_block RIGHTBRACKET .
+
+    $end            reduce using rule 4 (block -> LEFTBRACKET statement_block RIGHTBRACKET .)
+    ELSE            reduce using rule 4 (block -> LEFTBRACKET statement_block RIGHTBRACKET .)
+    SEMICOLON       reduce using rule 4 (block -> LEFTBRACKET statement_block RIGHTBRACKET .)
+
+
+state 27
+
+    (5) statement_block -> statement statement_block .
+
+    RIGHTBRACKET    reduce using rule 5 (statement_block -> statement statement_block .)
+
+
+state 28
+
+    (10) assignment -> ID EQUALS . expression SEMICOLON
+    (19) expression -> . exp comparation
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    expression                     shift and go to state 35
+    exp                            shift and go to state 36
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 29
+
+    (11) condition -> IF LEFTPAREN . expression RIGHTPAREN block else_condition SEMICOLON
+    (19) expression -> . exp comparation
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    expression                     shift and go to state 44
+    exp                            shift and go to state 36
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 30
+
+    (12) writing -> PRINT LEFTPAREN . print_val RIGHTPAREN SEMICOLON
+    (15) print_val -> . expression print_exp
+    (16) print_val -> . CTESTRING print_exp
+    (19) expression -> . exp comparation
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    CTESTRING       shift and go to state 47
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    print_val                      shift and go to state 45
+    expression                     shift and go to state 46
+    exp                            shift and go to state 36
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 31
+
+    (41) vars -> VAR var_id COLON type . SEMICOLON vars_block
+
+    SEMICOLON       shift and go to state 48
+
+
+state 32
+
+    (45) type -> INT .
+
+    SEMICOLON       reduce using rule 45 (type -> INT .)
+
+
+state 33
+
+    (46) type -> FLOAT .
+
+    SEMICOLON       reduce using rule 46 (type -> FLOAT .)
+
+
+state 34
+
+    (43) var_id_2 -> COMMA ID . var_id_2
+    (43) var_id_2 -> . COMMA ID var_id_2
+    (44) var_id_2 -> . empty
+    (49) empty -> .
+
+    COMMA           shift and go to state 24
+    COLON           reduce using rule 49 (empty -> .)
+
+    var_id_2                       shift and go to state 49
+    empty                          shift and go to state 25
+
+state 35
+
+    (10) assignment -> ID EQUALS expression . SEMICOLON
+
+    SEMICOLON       shift and go to state 50
+
+
+state 36
+
+    (19) expression -> exp . comparation
+    (20) comparation -> . GREATER comparation_exp
+    (21) comparation -> . LESS comparation_exp
+    (22) comparation -> . NOTEQUAL comparation_exp
+    (23) comparation -> . empty
+    (49) empty -> .
+
+    GREATER         shift and go to state 52
+    LESS            shift and go to state 53
+    NOTEQUAL        shift and go to state 54
+    SEMICOLON       reduce using rule 49 (empty -> .)
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+    COMMA           reduce using rule 49 (empty -> .)
+
+    comparation                    shift and go to state 51
+    empty                          shift and go to state 55
+
+state 37
+
+    (25) exp -> term . operator
+    (26) operator -> . PLUS term operator
+    (27) operator -> . MINUS term operator
+    (28) operator -> . empty
+    (49) empty -> .
+
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    GREATER         reduce using rule 49 (empty -> .)
+    LESS            reduce using rule 49 (empty -> .)
+    NOTEQUAL        reduce using rule 49 (empty -> .)
+    SEMICOLON       reduce using rule 49 (empty -> .)
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+    COMMA           reduce using rule 49 (empty -> .)
+
+    operator                       shift and go to state 56
+    empty                          shift and go to state 59
+
+state 38
+
+    (29) term -> factor . term_operator
+    (30) term_operator -> . TIMES factor term_operator
+    (31) term_operator -> . DIVIDE factor term_operator
+    (32) term_operator -> . empty
+    (49) empty -> .
+
+    TIMES           shift and go to state 61
+    DIVIDE          shift and go to state 62
+    PLUS            reduce using rule 49 (empty -> .)
+    MINUS           reduce using rule 49 (empty -> .)
+    GREATER         reduce using rule 49 (empty -> .)
+    LESS            reduce using rule 49 (empty -> .)
+    NOTEQUAL        reduce using rule 49 (empty -> .)
+    SEMICOLON       reduce using rule 49 (empty -> .)
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+    COMMA           reduce using rule 49 (empty -> .)
+
+    term_operator                  shift and go to state 60
+    empty                          shift and go to state 63
+
+state 39
+
+    (33) factor -> LEFTPAREN . expression RIGHTPAREN
+    (19) expression -> . exp comparation
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    expression                     shift and go to state 64
+    exp                            shift and go to state 36
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 40
+
+    (34) factor -> sign . var_cte
+    (38) var_cte -> . ID
+    (39) var_cte -> . CTEI
+    (40) var_cte -> . CTEF
+
+    ID              shift and go to state 66
+    CTEI            shift and go to state 67
+    CTEF            shift and go to state 68
+
+    var_cte                        shift and go to state 65
+
+state 41
+
+    (35) sign -> PLUS .
+
+    ID              reduce using rule 35 (sign -> PLUS .)
+    CTEI            reduce using rule 35 (sign -> PLUS .)
+    CTEF            reduce using rule 35 (sign -> PLUS .)
+
+
+state 42
+
+    (36) sign -> MINUS .
+
+    ID              reduce using rule 36 (sign -> MINUS .)
+    CTEI            reduce using rule 36 (sign -> MINUS .)
+    CTEF            reduce using rule 36 (sign -> MINUS .)
+
+
+state 43
+
+    (37) sign -> empty .
+
+    ID              reduce using rule 37 (sign -> empty .)
+    CTEI            reduce using rule 37 (sign -> empty .)
+    CTEF            reduce using rule 37 (sign -> empty .)
+
+
+state 44
+
+    (11) condition -> IF LEFTPAREN expression . RIGHTPAREN block else_condition SEMICOLON
+
+    RIGHTPAREN      shift and go to state 69
+
+
+state 45
+
+    (12) writing -> PRINT LEFTPAREN print_val . RIGHTPAREN SEMICOLON
+
+    RIGHTPAREN      shift and go to state 70
+
+
+state 46
+
+    (15) print_val -> expression . print_exp
+    (17) print_exp -> . COMMA print_val
+    (18) print_exp -> . empty
+    (49) empty -> .
+
+    COMMA           shift and go to state 72
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+
+    print_exp                      shift and go to state 71
+    empty                          shift and go to state 73
+
+state 47
+
+    (16) print_val -> CTESTRING . print_exp
+    (17) print_exp -> . COMMA print_val
+    (18) print_exp -> . empty
+    (49) empty -> .
+
+    COMMA           shift and go to state 72
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+
+    print_exp                      shift and go to state 74
+    empty                          shift and go to state 73
+
+state 48
+
+    (41) vars -> VAR var_id COLON type SEMICOLON . vars_block
+    (47) vars_block -> . var_id COLON type SEMICOLON vars_block
+    (48) vars_block -> . empty
+    (42) var_id -> . ID var_id_2
+    (49) empty -> .
+
+    ID              shift and go to state 12
+    LEFTBRACKET     reduce using rule 49 (empty -> .)
+
+    var_id                         shift and go to state 75
+    vars_block                     shift and go to state 76
+    empty                          shift and go to state 77
+
+state 49
+
+    (43) var_id_2 -> COMMA ID var_id_2 .
+
+    COLON           reduce using rule 43 (var_id_2 -> COMMA ID var_id_2 .)
+
+
+state 50
+
+    (10) assignment -> ID EQUALS expression SEMICOLON .
+
+    ID              reduce using rule 10 (assignment -> ID EQUALS expression SEMICOLON .)
+    IF              reduce using rule 10 (assignment -> ID EQUALS expression SEMICOLON .)
+    PRINT           reduce using rule 10 (assignment -> ID EQUALS expression SEMICOLON .)
+    RIGHTBRACKET    reduce using rule 10 (assignment -> ID EQUALS expression SEMICOLON .)
+
+
+state 51
+
+    (19) expression -> exp comparation .
+
+    SEMICOLON       reduce using rule 19 (expression -> exp comparation .)
+    RIGHTPAREN      reduce using rule 19 (expression -> exp comparation .)
+    COMMA           reduce using rule 19 (expression -> exp comparation .)
+
+
+state 52
+
+    (20) comparation -> GREATER . comparation_exp
+    (24) comparation_exp -> . exp
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    comparation_exp                shift and go to state 78
+    exp                            shift and go to state 79
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 53
+
+    (21) comparation -> LESS . comparation_exp
+    (24) comparation_exp -> . exp
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    comparation_exp                shift and go to state 80
+    exp                            shift and go to state 79
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 54
+
+    (22) comparation -> NOTEQUAL . comparation_exp
+    (24) comparation_exp -> . exp
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    comparation_exp                shift and go to state 81
+    exp                            shift and go to state 79
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 55
+
+    (23) comparation -> empty .
+
+    SEMICOLON       reduce using rule 23 (comparation -> empty .)
+    RIGHTPAREN      reduce using rule 23 (comparation -> empty .)
+    COMMA           reduce using rule 23 (comparation -> empty .)
+
+
+state 56
+
+    (25) exp -> term operator .
+
+    GREATER         reduce using rule 25 (exp -> term operator .)
+    LESS            reduce using rule 25 (exp -> term operator .)
+    NOTEQUAL        reduce using rule 25 (exp -> term operator .)
+    SEMICOLON       reduce using rule 25 (exp -> term operator .)
+    RIGHTPAREN      reduce using rule 25 (exp -> term operator .)
+    COMMA           reduce using rule 25 (exp -> term operator .)
+
+
+state 57
+
+    (26) operator -> PLUS . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    term                           shift and go to state 82
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 58
+
+    (27) operator -> MINUS . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    term                           shift and go to state 83
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 59
+
+    (28) operator -> empty .
+
+    GREATER         reduce using rule 28 (operator -> empty .)
+    LESS            reduce using rule 28 (operator -> empty .)
+    NOTEQUAL        reduce using rule 28 (operator -> empty .)
+    SEMICOLON       reduce using rule 28 (operator -> empty .)
+    RIGHTPAREN      reduce using rule 28 (operator -> empty .)
+    COMMA           reduce using rule 28 (operator -> empty .)
+
+
+state 60
+
+    (29) term -> factor term_operator .
+
+    PLUS            reduce using rule 29 (term -> factor term_operator .)
+    MINUS           reduce using rule 29 (term -> factor term_operator .)
+    GREATER         reduce using rule 29 (term -> factor term_operator .)
+    LESS            reduce using rule 29 (term -> factor term_operator .)
+    NOTEQUAL        reduce using rule 29 (term -> factor term_operator .)
+    SEMICOLON       reduce using rule 29 (term -> factor term_operator .)
+    RIGHTPAREN      reduce using rule 29 (term -> factor term_operator .)
+    COMMA           reduce using rule 29 (term -> factor term_operator .)
+
+
+state 61
+
+    (30) term_operator -> TIMES . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    factor                         shift and go to state 84
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 62
+
+    (31) term_operator -> DIVIDE . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    factor                         shift and go to state 85
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 63
+
+    (32) term_operator -> empty .
+
+    PLUS            reduce using rule 32 (term_operator -> empty .)
+    MINUS           reduce using rule 32 (term_operator -> empty .)
+    GREATER         reduce using rule 32 (term_operator -> empty .)
+    LESS            reduce using rule 32 (term_operator -> empty .)
+    NOTEQUAL        reduce using rule 32 (term_operator -> empty .)
+    SEMICOLON       reduce using rule 32 (term_operator -> empty .)
+    RIGHTPAREN      reduce using rule 32 (term_operator -> empty .)
+    COMMA           reduce using rule 32 (term_operator -> empty .)
+
+
+state 64
+
+    (33) factor -> LEFTPAREN expression . RIGHTPAREN
+
+    RIGHTPAREN      shift and go to state 86
+
+
+state 65
+
+    (34) factor -> sign var_cte .
+
+    TIMES           reduce using rule 34 (factor -> sign var_cte .)
+    DIVIDE          reduce using rule 34 (factor -> sign var_cte .)
+    PLUS            reduce using rule 34 (factor -> sign var_cte .)
+    MINUS           reduce using rule 34 (factor -> sign var_cte .)
+    GREATER         reduce using rule 34 (factor -> sign var_cte .)
+    LESS            reduce using rule 34 (factor -> sign var_cte .)
+    NOTEQUAL        reduce using rule 34 (factor -> sign var_cte .)
+    SEMICOLON       reduce using rule 34 (factor -> sign var_cte .)
+    RIGHTPAREN      reduce using rule 34 (factor -> sign var_cte .)
+    COMMA           reduce using rule 34 (factor -> sign var_cte .)
+
+
+state 66
+
+    (38) var_cte -> ID .
+
+    TIMES           reduce using rule 38 (var_cte -> ID .)
+    DIVIDE          reduce using rule 38 (var_cte -> ID .)
+    PLUS            reduce using rule 38 (var_cte -> ID .)
+    MINUS           reduce using rule 38 (var_cte -> ID .)
+    GREATER         reduce using rule 38 (var_cte -> ID .)
+    LESS            reduce using rule 38 (var_cte -> ID .)
+    NOTEQUAL        reduce using rule 38 (var_cte -> ID .)
+    SEMICOLON       reduce using rule 38 (var_cte -> ID .)
+    RIGHTPAREN      reduce using rule 38 (var_cte -> ID .)
+    COMMA           reduce using rule 38 (var_cte -> ID .)
+
+
+state 67
+
+    (39) var_cte -> CTEI .
+
+    TIMES           reduce using rule 39 (var_cte -> CTEI .)
+    DIVIDE          reduce using rule 39 (var_cte -> CTEI .)
+    PLUS            reduce using rule 39 (var_cte -> CTEI .)
+    MINUS           reduce using rule 39 (var_cte -> CTEI .)
+    GREATER         reduce using rule 39 (var_cte -> CTEI .)
+    LESS            reduce using rule 39 (var_cte -> CTEI .)
+    NOTEQUAL        reduce using rule 39 (var_cte -> CTEI .)
+    SEMICOLON       reduce using rule 39 (var_cte -> CTEI .)
+    RIGHTPAREN      reduce using rule 39 (var_cte -> CTEI .)
+    COMMA           reduce using rule 39 (var_cte -> CTEI .)
+
+
+state 68
+
+    (40) var_cte -> CTEF .
+
+    TIMES           reduce using rule 40 (var_cte -> CTEF .)
+    DIVIDE          reduce using rule 40 (var_cte -> CTEF .)
+    PLUS            reduce using rule 40 (var_cte -> CTEF .)
+    MINUS           reduce using rule 40 (var_cte -> CTEF .)
+    GREATER         reduce using rule 40 (var_cte -> CTEF .)
+    LESS            reduce using rule 40 (var_cte -> CTEF .)
+    NOTEQUAL        reduce using rule 40 (var_cte -> CTEF .)
+    SEMICOLON       reduce using rule 40 (var_cte -> CTEF .)
+    RIGHTPAREN      reduce using rule 40 (var_cte -> CTEF .)
+    COMMA           reduce using rule 40 (var_cte -> CTEF .)
+
+
+state 69
+
+    (11) condition -> IF LEFTPAREN expression RIGHTPAREN . block else_condition SEMICOLON
+    (4) block -> . LEFTBRACKET statement_block RIGHTBRACKET
+
+    LEFTBRACKET     shift and go to state 10
+
+    block                          shift and go to state 87
+
+state 70
+
+    (12) writing -> PRINT LEFTPAREN print_val RIGHTPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 88
+
+
+state 71
+
+    (15) print_val -> expression print_exp .
+
+    RIGHTPAREN      reduce using rule 15 (print_val -> expression print_exp .)
+
+
+state 72
+
+    (17) print_exp -> COMMA . print_val
+    (15) print_val -> . expression print_exp
+    (16) print_val -> . CTESTRING print_exp
+    (19) expression -> . exp comparation
+    (25) exp -> . term operator
+    (29) term -> . factor term_operator
+    (33) factor -> . LEFTPAREN expression RIGHTPAREN
+    (34) factor -> . sign var_cte
+    (35) sign -> . PLUS
+    (36) sign -> . MINUS
+    (37) sign -> . empty
+    (49) empty -> .
+
+    CTESTRING       shift and go to state 47
+    LEFTPAREN       shift and go to state 39
+    PLUS            shift and go to state 41
+    MINUS           shift and go to state 42
+    ID              reduce using rule 49 (empty -> .)
+    CTEI            reduce using rule 49 (empty -> .)
+    CTEF            reduce using rule 49 (empty -> .)
+
+    print_val                      shift and go to state 89
+    expression                     shift and go to state 46
+    exp                            shift and go to state 36
+    term                           shift and go to state 37
+    factor                         shift and go to state 38
+    sign                           shift and go to state 40
+    empty                          shift and go to state 43
+
+state 73
+
+    (18) print_exp -> empty .
+
+    RIGHTPAREN      reduce using rule 18 (print_exp -> empty .)
+
+
+state 74
+
+    (16) print_val -> CTESTRING print_exp .
+
+    RIGHTPAREN      reduce using rule 16 (print_val -> CTESTRING print_exp .)
+
+
+state 75
+
+    (47) vars_block -> var_id . COLON type SEMICOLON vars_block
+
+    COLON           shift and go to state 90
+
+
+state 76
+
+    (41) vars -> VAR var_id COLON type SEMICOLON vars_block .
+
+    LEFTBRACKET     reduce using rule 41 (vars -> VAR var_id COLON type SEMICOLON vars_block .)
+
+
+state 77
+
+    (48) vars_block -> empty .
+
+    LEFTBRACKET     reduce using rule 48 (vars_block -> empty .)
+
+
+state 78
+
+    (20) comparation -> GREATER comparation_exp .
+
+    SEMICOLON       reduce using rule 20 (comparation -> GREATER comparation_exp .)
+    RIGHTPAREN      reduce using rule 20 (comparation -> GREATER comparation_exp .)
+    COMMA           reduce using rule 20 (comparation -> GREATER comparation_exp .)
+
+
+state 79
+
+    (24) comparation_exp -> exp .
+
+    SEMICOLON       reduce using rule 24 (comparation_exp -> exp .)
+    RIGHTPAREN      reduce using rule 24 (comparation_exp -> exp .)
+    COMMA           reduce using rule 24 (comparation_exp -> exp .)
+
+
+state 80
+
+    (21) comparation -> LESS comparation_exp .
+
+    SEMICOLON       reduce using rule 21 (comparation -> LESS comparation_exp .)
+    RIGHTPAREN      reduce using rule 21 (comparation -> LESS comparation_exp .)
+    COMMA           reduce using rule 21 (comparation -> LESS comparation_exp .)
+
+
+state 81
+
+    (22) comparation -> NOTEQUAL comparation_exp .
+
+    SEMICOLON       reduce using rule 22 (comparation -> NOTEQUAL comparation_exp .)
+    RIGHTPAREN      reduce using rule 22 (comparation -> NOTEQUAL comparation_exp .)
+    COMMA           reduce using rule 22 (comparation -> NOTEQUAL comparation_exp .)
+
+
+state 82
+
+    (26) operator -> PLUS term . operator
+    (26) operator -> . PLUS term operator
+    (27) operator -> . MINUS term operator
+    (28) operator -> . empty
+    (49) empty -> .
+
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    GREATER         reduce using rule 49 (empty -> .)
+    LESS            reduce using rule 49 (empty -> .)
+    NOTEQUAL        reduce using rule 49 (empty -> .)
+    SEMICOLON       reduce using rule 49 (empty -> .)
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+    COMMA           reduce using rule 49 (empty -> .)
+
+    operator                       shift and go to state 91
+    empty                          shift and go to state 59
+
+state 83
+
+    (27) operator -> MINUS term . operator
+    (26) operator -> . PLUS term operator
+    (27) operator -> . MINUS term operator
+    (28) operator -> . empty
+    (49) empty -> .
+
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    GREATER         reduce using rule 49 (empty -> .)
+    LESS            reduce using rule 49 (empty -> .)
+    NOTEQUAL        reduce using rule 49 (empty -> .)
+    SEMICOLON       reduce using rule 49 (empty -> .)
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+    COMMA           reduce using rule 49 (empty -> .)
+
+    operator                       shift and go to state 92
+    empty                          shift and go to state 59
+
+state 84
+
+    (30) term_operator -> TIMES factor . term_operator
+    (30) term_operator -> . TIMES factor term_operator
+    (31) term_operator -> . DIVIDE factor term_operator
+    (32) term_operator -> . empty
+    (49) empty -> .
+
+    TIMES           shift and go to state 61
+    DIVIDE          shift and go to state 62
+    PLUS            reduce using rule 49 (empty -> .)
+    MINUS           reduce using rule 49 (empty -> .)
+    GREATER         reduce using rule 49 (empty -> .)
+    LESS            reduce using rule 49 (empty -> .)
+    NOTEQUAL        reduce using rule 49 (empty -> .)
+    SEMICOLON       reduce using rule 49 (empty -> .)
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+    COMMA           reduce using rule 49 (empty -> .)
+
+    term_operator                  shift and go to state 93
+    empty                          shift and go to state 63
+
+state 85
+
+    (31) term_operator -> DIVIDE factor . term_operator
+    (30) term_operator -> . TIMES factor term_operator
+    (31) term_operator -> . DIVIDE factor term_operator
+    (32) term_operator -> . empty
+    (49) empty -> .
+
+    TIMES           shift and go to state 61
+    DIVIDE          shift and go to state 62
+    PLUS            reduce using rule 49 (empty -> .)
+    MINUS           reduce using rule 49 (empty -> .)
+    GREATER         reduce using rule 49 (empty -> .)
+    LESS            reduce using rule 49 (empty -> .)
+    NOTEQUAL        reduce using rule 49 (empty -> .)
+    SEMICOLON       reduce using rule 49 (empty -> .)
+    RIGHTPAREN      reduce using rule 49 (empty -> .)
+    COMMA           reduce using rule 49 (empty -> .)
+
+    term_operator                  shift and go to state 94
+    empty                          shift and go to state 63
+
+state 86
+
+    (33) factor -> LEFTPAREN expression RIGHTPAREN .
+
+    TIMES           reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    DIVIDE          reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    PLUS            reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    MINUS           reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    GREATER         reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    LESS            reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    NOTEQUAL        reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    SEMICOLON       reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    RIGHTPAREN      reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+    COMMA           reduce using rule 33 (factor -> LEFTPAREN expression RIGHTPAREN .)
+
+
+state 87
+
+    (11) condition -> IF LEFTPAREN expression RIGHTPAREN block . else_condition SEMICOLON
+    (13) else_condition -> . ELSE block
+    (14) else_condition -> . empty
+    (49) empty -> .
+
+    ELSE            shift and go to state 96
+    SEMICOLON       reduce using rule 49 (empty -> .)
+
+    else_condition                 shift and go to state 95
+    empty                          shift and go to state 97
+
+state 88
+
+    (12) writing -> PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON .
+
+    ID              reduce using rule 12 (writing -> PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON .)
+    IF              reduce using rule 12 (writing -> PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON .)
+    PRINT           reduce using rule 12 (writing -> PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON .)
+    RIGHTBRACKET    reduce using rule 12 (writing -> PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON .)
+
+
+state 89
+
+    (17) print_exp -> COMMA print_val .
+
+    RIGHTPAREN      reduce using rule 17 (print_exp -> COMMA print_val .)
+
+
+state 90
+
+    (47) vars_block -> var_id COLON . type SEMICOLON vars_block
+    (45) type -> . INT
+    (46) type -> . FLOAT
+
+    INT             shift and go to state 32
+    FLOAT           shift and go to state 33
+
+    type                           shift and go to state 98
+
+state 91
+
+    (26) operator -> PLUS term operator .
+
+    GREATER         reduce using rule 26 (operator -> PLUS term operator .)
+    LESS            reduce using rule 26 (operator -> PLUS term operator .)
+    NOTEQUAL        reduce using rule 26 (operator -> PLUS term operator .)
+    SEMICOLON       reduce using rule 26 (operator -> PLUS term operator .)
+    RIGHTPAREN      reduce using rule 26 (operator -> PLUS term operator .)
+    COMMA           reduce using rule 26 (operator -> PLUS term operator .)
+
+
+state 92
+
+    (27) operator -> MINUS term operator .
+
+    GREATER         reduce using rule 27 (operator -> MINUS term operator .)
+    LESS            reduce using rule 27 (operator -> MINUS term operator .)
+    NOTEQUAL        reduce using rule 27 (operator -> MINUS term operator .)
+    SEMICOLON       reduce using rule 27 (operator -> MINUS term operator .)
+    RIGHTPAREN      reduce using rule 27 (operator -> MINUS term operator .)
+    COMMA           reduce using rule 27 (operator -> MINUS term operator .)
+
+
+state 93
+
+    (30) term_operator -> TIMES factor term_operator .
+
+    PLUS            reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+    MINUS           reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+    GREATER         reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+    LESS            reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+    NOTEQUAL        reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+    SEMICOLON       reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+    RIGHTPAREN      reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+    COMMA           reduce using rule 30 (term_operator -> TIMES factor term_operator .)
+
+
+state 94
+
+    (31) term_operator -> DIVIDE factor term_operator .
+
+    PLUS            reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+    MINUS           reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+    GREATER         reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+    LESS            reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+    NOTEQUAL        reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+    SEMICOLON       reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+    RIGHTPAREN      reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+    COMMA           reduce using rule 31 (term_operator -> DIVIDE factor term_operator .)
+
+
+state 95
+
+    (11) condition -> IF LEFTPAREN expression RIGHTPAREN block else_condition . SEMICOLON
+
+    SEMICOLON       shift and go to state 99
+
+
+state 96
+
+    (13) else_condition -> ELSE . block
+    (4) block -> . LEFTBRACKET statement_block RIGHTBRACKET
+
+    LEFTBRACKET     shift and go to state 10
+
+    block                          shift and go to state 100
+
+state 97
+
+    (14) else_condition -> empty .
+
+    SEMICOLON       reduce using rule 14 (else_condition -> empty .)
+
+
+state 98
+
+    (47) vars_block -> var_id COLON type . SEMICOLON vars_block
+
+    SEMICOLON       shift and go to state 101
+
+
+state 99
+
+    (11) condition -> IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON .
+
+    ID              reduce using rule 11 (condition -> IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON .)
+    IF              reduce using rule 11 (condition -> IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON .)
+    PRINT           reduce using rule 11 (condition -> IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON .)
+    RIGHTBRACKET    reduce using rule 11 (condition -> IF LEFTPAREN expression RIGHTPAREN block else_condition SEMICOLON .)
+
+
+state 100
+
+    (13) else_condition -> ELSE block .
+
+    SEMICOLON       reduce using rule 13 (else_condition -> ELSE block .)
+
+
+state 101
+
+    (47) vars_block -> var_id COLON type SEMICOLON . vars_block
+    (47) vars_block -> . var_id COLON type SEMICOLON vars_block
+    (48) vars_block -> . empty
+    (42) var_id -> . ID var_id_2
+    (49) empty -> .
+
+    ID              shift and go to state 12
+    LEFTBRACKET     reduce using rule 49 (empty -> .)
+
+    var_id                         shift and go to state 75
+    vars_block                     shift and go to state 102
+    empty                          shift and go to state 77
+
+state 102
+
+    (47) vars_block -> var_id COLON type SEMICOLON vars_block .
+
+    LEFTBRACKET     reduce using rule 47 (vars_block -> var_id COLON type SEMICOLON vars_block .)
+
