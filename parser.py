@@ -1,3 +1,8 @@
+# -----------------------------------------------------------------------------
+# parser.py
+#
+# Parser para lenguaje LittleDuck2020
+# -----------------------------------------------------------------------------
 import sys
 import ply.yacc as yacc
 
@@ -40,11 +45,12 @@ def p_condition(p):
 def p_writing(p):
     '''writing : PRINT LEFTPAREN print_val RIGHTPAREN SEMICOLON'''
 
-
+# Definición de la condición else
 def p_else_condition(p):
     '''else_condition : ELSE block
                       | empty'''
 
+# Definiciónes de print_val y print_exp
 def p_print_val(p):
     '''print_val : expression print_exp
                  | CTESTRING print_exp'''
@@ -57,62 +63,59 @@ def p_print_exp(p):
 def p_expression(p):
     '''expression : exp comparation'''
 
-
+# Definición de los operadores de comparación
 def p_comparation(p):
     '''comparation : GREATER comparation_exp
                    | LESS comparation_exp
                    | NOTEQUAL comparation_exp
                    | empty'''
 
-
+# Expresión de comparación
 def p_comparation_exp(p):
     '''comparation_exp : exp'''
 
-
+# Definición de expresión
 def p_exp(p):
     '''exp : term operator'''
 
-
+# Definición de los operadores de suma y resta
 def p_operator(p):
     '''operator : PLUS term operator
                 | MINUS term operator
                 | empty'''
 
-
+# Definición de un termino
 def p_term(p):
     '''term : factor term_operator'''
 
-
+# Definición de los operadores de multiplicación y división
 def p_term_operator(p):
     '''term_operator : TIMES factor term_operator
                      | DIVIDE factor term_operator
                      | empty'''
 
-
+# Definición de un factor
 def p_factor(p):
     '''factor : LEFTPAREN expression RIGHTPAREN
               | sign var_cte'''
 
-
+# Definición de signo de un termino
 def p_sing(p):
     '''sign : PLUS
             | MINUS
             | empty'''
 
-
+# Definición de la declaración de variables
 def p_var_cte(p):
     '''var_cte : ID
                | CTEI
                | CTEF'''
 
-
 def p_vars(p):
     '''vars : VAR var_id COLON type SEMICOLON vars_block'''
 
-
 def p_var_id(p):
     '''var_id : ID var_id_2'''
-
 
 def p_var_id_2(p):
     '''var_id_2 : COMMA ID var_id_2
@@ -141,6 +144,7 @@ def p_empty(p):
 
 yacc.yacc()
 
+# Main progra del parser
 if __name__ == '__main__':
 
     if len(sys.argv) > 1:

@@ -1,3 +1,8 @@
+# -----------------------------------------------------------------------------
+# lexer.py
+#
+# Lexer para lenguaje LittleDuck2020
+# -----------------------------------------------------------------------------
 import ply.lex as lex
 
 # Aqui definimos las palabras reservadas del lenguaje
